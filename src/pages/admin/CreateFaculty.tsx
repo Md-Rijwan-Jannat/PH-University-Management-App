@@ -1,5 +1,5 @@
 const CreateFaculty = () => {
-  return <div>This is admin create component</div>;
+  return <div>This is faculty create component</div>;
 };
 
 export default CreateFaculty;

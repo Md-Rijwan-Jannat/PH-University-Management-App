@@ -1,5 +1,5 @@
-import { Layout, Menu } from "antd";
 import Logo from "../ui/Logo";
+import { Layout, Menu } from "antd";
 import { sliderItemsGenerator } from "../../utils/sliderItemsGenerator";
 import { AdminPats } from "../../routes/admin.routes";
 import { FacultyPats } from "../../routes/faculty.routes";
@@ -36,13 +36,37 @@ const Slider = () => {
   }
 
   return (
-    <Sider>
-      <Logo />
+    <Sider
+      breakpoint="sm"
+      collapsedWidth="0"
+      onBreakpoint={(broken) => {
+        console.log(broken);
+      }}
+      onCollapse={(collapsed, type) => {
+        console.log(collapsed, type);
+      }}
+      style={{
+        height: "100vh",
+        zIndex: 2,
+        position: "absolute",
+        left: 0,
+      }}
+    >
+      <div
+        style={{
+          backgroundColor: "#334454",
+          margin: "16px 16px",
+          borderRadius: "8px",
+        }}
+      >
+        <Logo />
+      </div>
       <Menu
         theme="dark"
         mode="inline"
         defaultSelectedKeys={["4"]}
         items={sliderItems}
+        style={{ marginBottom: "100px" }}
       />
     </Sider>
   );

@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { baseApi } from "../../api/baseApi";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
-      query: (userInfo) => ({
+      query: (userInfo: any) => ({
         url: "/auth/login",
         method: "POST",
         body: userInfo,
@@ -14,5 +13,4 @@ export const authApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-// Explicitly type the useLoginMutation hook
 export const { useLoginMutation }: any = authApi;

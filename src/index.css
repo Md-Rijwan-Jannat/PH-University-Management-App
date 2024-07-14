@@ -3,3 +3,13 @@
   padding: 0px;
   margin: 0px;
 }
+
+.custom-input {
+  border-color: #dfd0d0; /* Set the default border color if needed */
+}
+
+.custom-input:hover,
+.custom-input:focus {
+  border-color: #ffa2a6 !important;
+  box-shadow: 0 0 0 1px rgba(255, 162, 166, 0.2) !important; /* Optional: Add shadow effect to match Ant Design's focus style */
+}

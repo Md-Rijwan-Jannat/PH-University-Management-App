@@ -10,6 +10,23 @@
 
 .custom-input:hover,
 .custom-input:focus {
-  border-color: #ffa2a6 !important;
-  box-shadow: 0 0 0 1px rgba(255, 162, 166, 0.2) !important; /* Optional: Add shadow effect to match Ant Design's focus style */
+  border-color: #f8b7ba !important;
+  box-shadow: 0 0 0 1px rgba(255, 162, 166, 0.2) !important;
+}
+
+.custom-input .ant-select-selector {
+  border-color: #dfd0d0; /* Set the default border color */
+}
+
+.custom-input .ant-select-selector:hover,
+.custom-input .ant-select-selector:focus,
+.custom-input .ant-select-focused .ant-select-selector {
+  border-color: #f8b7ba !important;
+  box-shadow: 0 0 0 1px rgba(255, 162, 166, 0.2) !important;
+}
+
+.custom-input .ant-select-item-option:hover,
+.custom-input .ant-select-item-option-selected {
+  background-color: #f8b7ba !important;
+  color: white; /* Adjust as needed */
 }

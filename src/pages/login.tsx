@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from "react";
 import { Button, Row } from "antd";
 import { FieldValues } from "react-hook-form";
 import { useLoginMutation } from "../redux/features/auth/authApi";
@@ -13,7 +11,7 @@ import PHForm from "../components/form/PHForm";
 import PHInput from "../components/form/PHInput";
 
 const Login: React.FC = () => {
-  const [loginF, { isError, error, isLoading }] = useLoginMutation();
+  const [loginF, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -21,14 +19,6 @@ const Login: React.FC = () => {
     userId: "A-0001",
     password: "Admin01@",
   };
-
-  useEffect(() => {
-    if (isError && error) {
-      toast.error("Incorrect useID and password");
-    }
-  }, [isError, error]);
-
-  console.log(error);
 
   const onSubmit = async (formData: FieldValues) => {
     const userId = toast.loading("Logging in...");

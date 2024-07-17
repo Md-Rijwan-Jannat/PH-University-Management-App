@@ -37,7 +37,7 @@ const Slider = () => {
 
   return (
     <Sider
-      breakpoint="sm"
+      breakpoint="lg"
       collapsedWidth="0"
       onBreakpoint={(broken) => {
         console.log(broken);
@@ -48,7 +48,8 @@ const Slider = () => {
       style={{
         height: "100vh",
         zIndex: 2,
-        position: "absolute",
+        position: "sticky",
+        top: 0,
         left: 0,
       }}
     >
@@ -66,7 +67,6 @@ const Slider = () => {
         mode="inline"
         defaultSelectedKeys={["4"]}
         items={sliderItems}
-        style={{ marginBottom: "100px" }}
       />
     </Sider>
   );

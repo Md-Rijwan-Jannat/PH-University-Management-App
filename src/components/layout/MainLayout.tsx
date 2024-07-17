@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+
 import { Button, Layout } from "antd";
 import { Outlet } from "react-router-dom";
 import Slider from "./Slider";
@@ -5,7 +7,6 @@ import { useAppDispatch } from "../../redux/hook";
 import { logout } from "../../redux/features/auth/authSlice";
 
 const { Header, Content } = Layout;
-
 const MainLayout = () => {
   const dispatch = useAppDispatch();
 
@@ -13,7 +14,7 @@ const MainLayout = () => {
     dispatch(logout());
   };
   return (
-    <Layout style={{ minHeight: "100vh", width: "100%" }}>
+    <Layout style={{}}>
       <Slider />
       <Layout>
         <Header
@@ -26,7 +27,9 @@ const MainLayout = () => {
             justifyContent: "end",
             alignItems: "center",
             paddingRight: "16px",
-            height: "100px",
+            height: "120px",
+            position: "sticky",
+            top: 0,
           }}
         >
           <Button size="middle" ghost danger onClick={handleLogout}>
@@ -36,10 +39,12 @@ const MainLayout = () => {
             Login
           </Button>
         </Header>
-        <Content style={{ margin: "80px 16px 0", overflow: "initial" }}>
+        <Content style={{ overflow: "initial" }}>
           <div
             style={{
-              padding: 24,
+              height: "100%",
+              width: "100%",
+              padding: 20,
             }}
           >
             <Outlet />

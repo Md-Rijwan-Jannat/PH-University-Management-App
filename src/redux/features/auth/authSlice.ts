@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IInitialState } from "../../interface/authTypes";
+import { IInitialState } from "../../../types/authTypes";
 import { RootState } from "../../store";
 
 const initialState: IInitialState = {

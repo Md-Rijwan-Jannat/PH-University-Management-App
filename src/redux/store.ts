@@ -21,7 +21,7 @@ const persistConfig = {
 
 const ourPersistsReducer = persistReducer(persistConfig, authReducer);
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: ourPersistsReducer,
@@ -33,6 +33,8 @@ export const store = configureStore({
       },
     }).concat(baseApi.middleware),
 });
+
+export default store;
 
 export const persistor = persistStore(store);
 

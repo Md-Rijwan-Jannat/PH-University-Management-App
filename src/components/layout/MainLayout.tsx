@@ -32,7 +32,7 @@ const MainLayout = () => {
             top: 0,
           }}
         >
-          <Button size="middle" ghost danger onClick={handleLogout}>
+          <Button size="middle" ghost onClick={handleLogout}>
             Logout
           </Button>
           <Button size="middle" type="primary" danger onClick={handleLogout}>

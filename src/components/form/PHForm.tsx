@@ -1,14 +1,19 @@
-import { FormProvider, useForm } from "react-hook-form";
-import { IFormConfig, IPHFormProps } from "./types";
+import {
+  FieldValues,
+  FormProvider,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
 import { Form } from "antd";
+import { TFormConfig, TPHFormProps } from "./types";
 
 const PHForm = ({
   onSubmit,
   children,
   defaultValues,
   resolver,
-}: IPHFormProps) => {
-  const formConfig: IFormConfig = {};
+}: TPHFormProps) => {
+  const formConfig: TFormConfig = {};
 
   if (defaultValues) {
     formConfig["defaultValues"] = defaultValues;
@@ -20,6 +25,11 @@ const PHForm = ({
 
   const methods = useForm(formConfig);
 
+  const submit: SubmitHandler<FieldValues> = (data) => {
+    onSubmit(data);
+    methods.reset();
+  };
+
   return (
     <FormProvider {...methods}>
       <Form
@@ -29,8 +39,11 @@ const PHForm = ({
           border: "1px solid #cccccc",
           borderRadius: "8px",
           padding: "24px",
+          width: "100%",
+          height: "100%",
+          margin: "0 auto",
         }}
-        onFinish={methods.handleSubmit(onSubmit)}
+        onFinish={methods.handleSubmit(submit)}
       >
         {children}
       </Form>

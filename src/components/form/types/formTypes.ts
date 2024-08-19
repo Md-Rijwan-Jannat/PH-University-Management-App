@@ -1,35 +1,48 @@
 import { ReactNode } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
-export interface ILoginFormInputs {
+export type TLoginFormInputs = {
   userId: string;
   password: string;
-}
+};
 
-export interface IFormConfig {
-  defaultValues?: ILoginFormInputs;
+export type IFormConfig = {
+  defaultValues?: TLoginFormInputs;
   resolver?: any;
-}
+};
 
-export interface IPHFormProps {
+export type TFormConfig = {
+  defaultValues?: Record<string, any>;
+  resolver?: any;
+};
+
+export type TPHFormProps = {
   onSubmit: SubmitHandler<FieldValues>;
   children: ReactNode;
-  defaultValues?: ILoginFormInputs;
-  resolver?: any;
-}
+} & TFormConfig;
 
-export interface IPhInput {
+export type TPhInput = {
   type: string;
   name: string;
   label?: string;
-}
+  placeholder: string;
+};
 
-export interface TLabelProps {
+export type TLabelProps = {
   label: string;
   name: string;
-  options: {
-    value: string;
-    label: string;
-    disabled?: boolean;
-  }[];
-}
+  options:
+    | {
+        value: string;
+        label: string;
+        disabled?: boolean;
+      }[]
+    | undefined;
+  onChange?: (value: string) => void;
+  disabled?: boolean;
+};
+
+export type TPHDatePicker = {
+  name: string;
+  label: string;
+};

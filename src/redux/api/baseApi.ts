@@ -1,13 +1,15 @@
 import {
+  BaseQueryApi,
   BaseQueryFn,
   createApi,
+  DefinitionType,
   FetchArgs,
   fetchBaseQuery,
-  FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 import { logout, setUser } from "../features/auth/authSlice";
 import { toast } from "sonner";
+import { IErrorResponse } from "../../types";
 
 const apiUrl = "http://localhost:5000";
 
@@ -24,39 +26,50 @@ const baseQuery = fetchBaseQuery({
 });
 
 const baseQueryWithRefreshToken: BaseQueryFn<
-  string | FetchArgs,
-  unknown,
-  FetchBaseQueryError
-> = async (args, api, extraOptions) => {
+  FetchArgs,
+  BaseQueryApi,
+  DefinitionType
+> = async (args, api, extraOptions): Promise<any> => {
   let result = await baseQuery(args, api, extraOptions);
 
-  if (result?.error?.status === 404) {
-    toast.error("User not found! Please register");
-  }
+  if (result?.error?.status) {
+    const errorData = result.error.data as IErrorResponse;
 
-  if (result?.error?.status === 401) {
-    const res = await fetch(`${apiUrl}/api/v1/auth/refresh-token`, {
-      method: "POST",
-      credentials: "include", // Ensure cookies are included
-    });
+    if (result.error.status === 404) {
+      toast.error(errorData.message);
+    }
+    if (result.error.status === 400) {
+      toast.error(errorData.errorSources?.[0]?.message);
+    }
+    if (result.error.status === 409) {
+      toast.error(errorData.message);
+    }
 
-    const refreshData = await res.json();
+    console.log(result.error);
+    if (result.error.status === 401) {
+      const res = await fetch(`${apiUrl}/api/v1/auth/refresh-token`, {
+        method: "POST",
+        credentials: "include", // Ensure cookies are included
+      });
 
-    if (refreshData?.data?.accessToken) {
-      const user = (api.getState() as RootState).auth?.user;
-      const token = refreshData?.data?.accessToken;
+      const refreshData = await res.json();
 
-      api.dispatch(
-        setUser({
-          user,
-          token: token,
-        })
-      );
+      if (refreshData?.data?.accessToken) {
+        const user = (api.getState() as RootState).auth?.user;
+        const token = refreshData?.data?.accessToken;
 
-      result = await baseQuery(args, api, extraOptions);
-    } else {
-      console.error("Failed to refresh token:", refreshData.message);
-      api.dispatch(logout());
+        api.dispatch(
+          setUser({
+            user,
+            token: token,
+          })
+        );
+
+        result = await baseQuery(args, api, extraOptions);
+      } else {
+        console.error("Failed to refresh token:", refreshData.message);
+        api.dispatch(logout());
+      }
     }
   }
 

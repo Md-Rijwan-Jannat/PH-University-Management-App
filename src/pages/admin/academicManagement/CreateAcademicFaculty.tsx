@@ -1,5 +1,73 @@
+import { Button } from "antd";
+import PHInput from "../../../components/form/PHInput";
+import PHForm from "../../../components/form/PHForm";
+import { FieldValues, SubmitHandler } from "react-hook-form";
+import { IResponse, TAcademicFaculty } from "../../../types";
+import { toast } from "sonner";
+import { useAddAcademicFacultyMutation } from "../../../redux/features/admin/academicManagement.api";
+import { academicFacultySchema } from "../../../schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 const CreateAcademicFaculty = () => {
-  return <div>CreateAcademicFaculty</div>;
+  const [addAcademicFaculty, { isLoading }] = useAddAcademicFacultyMutation();
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("Creating Faculty...");
+
+    const academicFaculty = {
+      name: data.name as string,
+    };
+
+    try {
+      const res = (await addAcademicFaculty({
+        academicFaculty,
+      })) as IResponse<TAcademicFaculty>;
+
+      if (res.error) {
+        toast.error(res.error.message, { id: toastId });
+      } else {
+        toast.success("Academic Faculty created successfully", {
+          id: toastId,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong", { id: toastId });
+    }
+  };
+
+  return (
+    <section
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <div
+        style={{
+          width: "400px",
+        }}
+      >
+        <PHForm
+          onSubmit={onSubmit}
+          resolver={zodResolver(academicFacultySchema)}
+        >
+          <PHInput
+            label="Academic Faculty"
+            name="name"
+            type="text"
+            placeholder="Enter Name"
+          />
+          <Button loading={isLoading} type="primary" danger htmlType="submit">
+            Submit
+          </Button>
+        </PHForm>
+      </div>
+    </section>
+  );
 };
 
 export default CreateAcademicFaculty;

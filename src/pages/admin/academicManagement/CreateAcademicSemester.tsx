@@ -5,38 +5,77 @@ import PHSelect from "../../../components/form/PHSelect";
 import { monthsOptions, nameOptions, yearOptions } from "../../../constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { academicSemesterSchema } from "../../../schemas";
+import { toast } from "sonner";
+import { useAddAcademicSemesterMutation } from "../../../redux/features/admin/academicManagement.api";
+import { IResponse, TAcademicSemester } from "../../../types";
 
 const CreateAcademicSemester = () => {
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const [addAcademicSemester, { isLoading }] = useAddAcademicSemesterMutation();
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("Creating Semester...");
     const name = nameOptions[Number(data?.name) - 1]?.label;
-    const semesterData = {
+    const semester = {
       name: name,
       year: data.year,
       code: data.name,
       startMonth: data.startMonth,
       endMonth: data.endMonth,
     };
-    console.log(semesterData);
+
+    const semesterData = {
+      semester,
+    };
+
+    try {
+      const res = (await addAcademicSemester(
+        semesterData
+      )) as IResponse<TAcademicSemester>;
+      if (res.error) {
+        toast.error(res.error.message, { id: toastId });
+      } else {
+        toast.success("Academic Semester created successfully", {
+          id: toastId,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong", { id: toastId });
+    }
   };
 
   return (
-    <section style={{ width: "100%" }}>
-      <PHForm
-        onSubmit={onSubmit}
-        resolver={zodResolver(academicSemesterSchema)}
+    <section
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <div
+        style={{
+          width: "400px",
+        }}
       >
-        <PHSelect label="Name" name="name" options={nameOptions} />
-        <PHSelect label="Year" name="year" options={yearOptions} />
-        <PHSelect
-          label="Start Month"
-          name="startMonth"
-          options={monthsOptions}
-        />
-        <PHSelect label="End Month" name="endMonth" options={monthsOptions} />
-        <Button type="primary" danger htmlType="submit">
-          Submit
-        </Button>
-      </PHForm>
+        <PHForm
+          onSubmit={onSubmit}
+          resolver={zodResolver(academicSemesterSchema)}
+        >
+          <PHSelect label="Name" name="name" options={nameOptions} />
+          <PHSelect label="Year" name="year" options={yearOptions} />
+          <PHSelect
+            label="Start Month"
+            name="startMonth"
+            options={monthsOptions}
+          />
+          <PHSelect label="End Month" name="endMonth" options={monthsOptions} />
+          <Button loading={isLoading} type="primary" danger htmlType="submit">
+            Submit
+          </Button>
+        </PHForm>
+      </div>
     </section>
   );
 };

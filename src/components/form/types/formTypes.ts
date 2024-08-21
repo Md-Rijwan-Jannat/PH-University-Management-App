@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
 export type TLoginFormInputs = {
@@ -26,6 +26,7 @@ export type TPhInput = {
   name: string;
   label?: string;
   placeholder: string;
+  disabled?: boolean;
 };
 
 export type TLabelProps = {
@@ -40,6 +41,8 @@ export type TLabelProps = {
     | undefined;
   onChange?: (value: string) => void;
   disabled?: boolean;
+  mode?: "multiple" | undefined;
+  onValueChange?: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export type TPHDatePicker = {

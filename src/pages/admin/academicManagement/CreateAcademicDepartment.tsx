@@ -13,7 +13,7 @@ import PHForm from "../../../components/form/PHForm";
 import PHInput from "../../../components/form/PHInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { academicDepartmentSchema } from "../../../schemas";
-import { Button } from "antd";
+import { Button, Col, Flex } from "antd";
 import PHSelect from "../../../components/form/PHSelect";
 
 const CreateAcademicDepartment = () => {
@@ -70,20 +70,8 @@ const CreateAcademicDepartment = () => {
   };
 
   return (
-    <section
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div
-        style={{
-          width: "400px",
-        }}
-      >
+    <Flex justify="center" align="center">
+      <Col xs={24} md={12} lg={10}>
         <PHForm onSubmit={onSubmit}>
           <PHInput
             label="Academic Department"
@@ -101,8 +89,8 @@ const CreateAcademicDepartment = () => {
             Submit
           </Button>
         </PHForm>
-      </div>
-    </section>
+      </Col>
+    </Flex>
   );
 };
 

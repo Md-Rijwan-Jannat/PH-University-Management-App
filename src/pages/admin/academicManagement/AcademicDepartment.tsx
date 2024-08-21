@@ -1,4 +1,4 @@
-import { Button, Table, TableColumnsType, TableProps } from "antd";
+import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
 import { useGetAllAcademicDepartmentsQuery } from "../../../redux/features/admin/academicManagement.api";
 import { TAcademicDepartment, TQueryParams } from "../../../types";
 import { formatUKDate, formatUKTime } from "../../../utils/dateFormat";
@@ -15,6 +15,7 @@ type TTableData = {
 
 const AcademicDepartment = () => {
   const [params, setParams] = useState<TQueryParams[] | undefined>(undefined);
+  const [page, setPage] = useState(1);
   const {
     data: academicDepartments,
     isLoading,
@@ -31,6 +32,8 @@ const AcademicDepartment = () => {
       updatedAtTime: formatUKTime(department.updatedAt),
     })
   );
+
+  const metaData = academicDepartments?.meta;
 
   const columns: TableColumnsType<TTableData> = [
     {
@@ -110,12 +113,25 @@ const AcademicDepartment = () => {
   }
 
   return (
-    <Table
-      loading={isFetching}
-      columns={columns}
-      dataSource={tableData}
-      onChange={onChange}
-    />
+    <>
+      <Table
+        loading={isFetching}
+        columns={columns}
+        dataSource={tableData}
+        onChange={onChange}
+        showSorterTooltip={{ target: "sorter-icon" }}
+        pagination={false}
+      />
+      <Pagination
+        style={{ marginTop: "24px" }}
+        align="center"
+        total={metaData.total}
+        pageSize={metaData.limit}
+        defaultCurrent={page}
+        current={page}
+        onChange={(value) => setPage(value)}
+      />
+    </>
   );
 };
 

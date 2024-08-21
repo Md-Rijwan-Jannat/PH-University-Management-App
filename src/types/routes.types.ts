@@ -12,7 +12,7 @@ export interface IRoute {
 }
 
 export interface IUserPath {
-  name: string;
+  name?: string;
   path?: string;
   element?: ReactNode;
   children?: IUserPath[];

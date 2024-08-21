@@ -1,9 +1,9 @@
 import {
   BaseQueryApi,
   BaseQueryFn,
-  createApi,
   DefinitionType,
   FetchArgs,
+  createApi,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
@@ -44,8 +44,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     if (result.error.status === 409) {
       toast.error(errorData.message);
     }
-
-    console.log(result.error);
     if (result.error.status === 401) {
       const res = await fetch(`${apiUrl}/api/v1/auth/refresh-token`, {
         method: "POST",
@@ -79,5 +77,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["semester", "courses", "offeredCourse"],
   endpoints: () => ({}),
 });

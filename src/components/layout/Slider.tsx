@@ -5,7 +5,7 @@ import { AdminPats } from "../../routes/admin.routes";
 import { FacultyPats } from "../../routes/faculty.routes";
 import { StudentPaths } from "../../routes/student.routes";
 import { useAppSelector } from "../../redux/hook";
-import { currentUser } from "../../redux/features/auth/authSlice";
+import { selectCurrentUser } from "../../redux/features/auth/authSlice";
 
 const { Sider } = Layout;
 
@@ -16,7 +16,7 @@ const UserRole = {
 };
 
 const Slider = () => {
-  const user = useAppSelector(currentUser);
+  const user = useAppSelector(selectCurrentUser);
   const role = `${user?.role}`;
   let sliderItems;
 

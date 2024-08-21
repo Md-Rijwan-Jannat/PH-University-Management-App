@@ -1,6 +1,6 @@
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import PHForm from "../../../components/form/PHForm";
-import { Button } from "antd";
+import { Button, Col, Flex } from "antd";
 import PHSelect from "../../../components/form/PHSelect";
 import { monthsOptions, nameOptions, yearOptions } from "../../../constants";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -45,20 +45,8 @@ const CreateAcademicSemester = () => {
   };
 
   return (
-    <section
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div
-        style={{
-          width: "400px",
-        }}
-      >
+    <Flex justify="center" align="center">
+      <Col xs={24} md={12} lg={10}>
         <PHForm
           onSubmit={onSubmit}
           resolver={zodResolver(academicSemesterSchema)}
@@ -75,8 +63,8 @@ const CreateAcademicSemester = () => {
             Submit
           </Button>
         </PHForm>
-      </div>
-    </section>
+      </Col>
+    </Flex>
   );
 };
 

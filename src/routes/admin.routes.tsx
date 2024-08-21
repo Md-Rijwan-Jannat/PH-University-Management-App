@@ -5,6 +5,12 @@ import CreateAcademicDepartment from "../pages/admin/academicManagement/CreateAc
 import CreateAcademicFaculty from "../pages/admin/academicManagement/CreateAcademicFaculty";
 import CreateAcademicSemester from "../pages/admin/academicManagement/CreateAcademicSemester";
 import AdminDashboard from "../pages/admin/AdminDashboard";
+import AllOfferedCourses from "../pages/admin/courseManagement/AllOfferedCourses";
+import Courses from "../pages/admin/courseManagement/Courses";
+import CreateCourse from "../pages/admin/courseManagement/CreateCourse";
+import OfferedCourse from "../pages/admin/courseManagement/OfferedCourse";
+import RegisteredSemester from "../pages/admin/courseManagement/RegisteredSemester";
+import SemesterRegistration from "../pages/admin/courseManagement/SemesterRegistration";
 import AdminData from "../pages/admin/userManagement.ts/AdminData";
 import CreateAdmin from "../pages/admin/userManagement.ts/CreateAdmin";
 import CreateFaculty from "../pages/admin/userManagement.ts/CreateFaculty";
@@ -96,74 +102,40 @@ const adminPaths = [
       },
     ],
   },
+  {
+    name: "Course Management",
+    children: [
+      {
+        name: "Create Course",
+        path: "create-course",
+        element: <CreateCourse />,
+      },
+      {
+        name: "Courses",
+        path: "courses",
+        element: <Courses />,
+      },
+      {
+        name: "Semester Registration",
+        path: "semester-registration",
+        element: <SemesterRegistration />,
+      },
+      {
+        name: "Registered Semester",
+        path: "registered-semester",
+        element: <RegisteredSemester />,
+      },
+      {
+        name: "Offered Course",
+        path: "offered-course",
+        element: <OfferedCourse />,
+      },
+      {
+        name: "All Offered Course",
+        path: "all-offered-course",
+        element: <AllOfferedCourses />,
+      },
+    ],
+  },
 ];
-
-// const adminRoutes = adminPaths.reduce((acc: IRoute[], item) => {
-//   if (item.path && item.element) {
-//     acc.push({
-//       path: item.path,
-//       element: item.element,
-//     });
-//   } else if (item.children) {
-//     item.children.forEach((child) => {
-//       if (child.path && child.element) {
-//         acc.push({
-//           path: child.path,
-//           element: child.element,
-//         });
-//       }
-//     });
-//   }
-
-//   return acc;
-// }, []);
-
-// const adminSliderRoutes = adminPaths.reduce((acc: ISliderRoute[], item) => {
-//   if (item.name && item.path) {
-//     acc.push({
-//       key: item.name,
-//       label: <NavLink to={`/admin/${item.path}`}>{item.name}</NavLink>,
-//     });
-//   } else if (item.children) {
-//     acc.push({
-//       key: item.name,
-//       label: item.name,
-//       children: item.children.map((child) => ({
-//         key: child.name,
-//         label: <NavLink to={`/admin/${child.path}`}>{child.name}</NavLink>,
-//       })),
-//     });
-//   }
-//   return acc;
-// }, []);
-
 export const AdminPats = adminPaths;
-
-/*
-Hard coded way
-*/
-
-// const adminPaths = [
-//   {
-//     name: "Dashboard",
-//     path: "dashboard",
-//     element: <AdminDashboard />,
-//   },
-//   {
-//     name: "Create Admin",
-//     path: "create-admin",
-//     element: <CreateAdmin />,
-//   },
-//   {
-//     name: "Create Faculty",
-//     path: "create-faculty",
-//     element: <CreateFaculty />,
-//   },
-//   {
-//     name: "Create Student",
-//     path: "create-student",
-//     element: <CreateStudent />,
-//   },
-// ];
-
-// export const AdminPaths = adminPaths;

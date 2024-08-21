@@ -1,7 +1,8 @@
-import { Button, Table, TableColumnsType, TableProps } from "antd";
+import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
 import { useGetAllAcademicSemestersQuery } from "../../../redux/features/admin/academicManagement.api";
 import { TAcademicSemester, TQueryParams } from "../../../types";
 import { useState } from "react";
+import { monthOrder } from "../../../constants";
 
 type TTableData = Pick<
   TAcademicSemester,
@@ -10,6 +11,7 @@ type TTableData = Pick<
 
 const AcademicSemester = () => {
   const [params, setParams] = useState<TQueryParams[] | undefined>(undefined);
+  const [page, setPage] = useState(1);
   const {
     data: semesterData,
     isLoading,
@@ -26,22 +28,9 @@ const AcademicSemester = () => {
     })
   );
 
-  console.log(isFetching, isLoading);
+  const metaData = semesterData?.meta;
 
-  const monthOrder = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  console.log(isFetching, isLoading);
 
   const columns: TableColumnsType<TTableData> = [
     {
@@ -128,13 +117,25 @@ const AcademicSemester = () => {
     return <div>Loading...</div>;
   }
   return (
-    <Table
-      loading={isFetching}
-      columns={columns}
-      dataSource={tableData}
-      onChange={onChange}
-      showSorterTooltip={{ target: "sorter-icon" }}
-    />
+    <>
+      <Table
+        loading={isFetching}
+        columns={columns}
+        dataSource={tableData}
+        onChange={onChange}
+        showSorterTooltip={{ target: "sorter-icon" }}
+        pagination={false}
+      />
+      <Pagination
+        style={{ marginTop: "24px" }}
+        align="center"
+        total={metaData.total}
+        pageSize={metaData.limit}
+        defaultCurrent={page}
+        current={page}
+        onChange={(value) => setPage(value)}
+      />
+    </>
   );
 };
 

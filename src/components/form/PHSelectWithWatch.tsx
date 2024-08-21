@@ -1,8 +1,28 @@
 import { Form, Select } from "antd";
 import { TLabelProps } from "./types";
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { useEffect } from "react";
 
-const PHSelect = ({ label, name, options, disabled, mode }: TLabelProps) => {
+const PHSelectWithWatch = ({
+  label,
+  name,
+  options,
+  disabled,
+  mode,
+  onValueChange,
+}: TLabelProps) => {
+  const { control } = useFormContext();
+  const watchValue = useWatch({
+    control,
+    name,
+  });
+
+  useEffect(() => {
+    if (onValueChange) {
+      onValueChange(watchValue);
+    }
+  }, [onValueChange, watchValue]);
+
   return (
     <Controller
       name={name}
@@ -29,4 +49,4 @@ const PHSelect = ({ label, name, options, disabled, mode }: TLabelProps) => {
   );
 };
 
-export default PHSelect;
+export default PHSelectWithWatch;

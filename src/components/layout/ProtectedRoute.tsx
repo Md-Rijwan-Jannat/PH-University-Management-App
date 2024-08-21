@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
 import { useSelector } from "react-redux";
-import { userToken } from "../../redux/features/auth/authSlice";
 import { Navigate } from "react-router-dom";
+import { useCurrentToken } from "../../redux/features/auth/authSlice";
 
 const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-  const token = useSelector(userToken);
+  const token = useSelector(useCurrentToken);
 
   if (!token) {
     return <Navigate to={"/login"} replace={true}></Navigate>;
